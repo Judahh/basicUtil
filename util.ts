@@ -104,6 +104,28 @@ class Util {
 }
 
 declare global {
+  class Util {
+    static browserLanguage;
+    static currentLanguage;
+    static dataJSON;
+  
+    static elementHTML(name: string, id?: string, body?: string);
+  
+    static getJsonPromise(path: string): JQueryPromise<any> ;
+  
+    static getTag(name: string);
+  
+    static getFileName(name: string);
+  
+    static getCurrentComponentPath();
+  
+    static getBrowserLanguage();
+  
+    static getCurrentLanguage();
+
+    static removeElements(elements: NodeListOf<Element>);
+  }
+
   interface Array<T> {
     type: any;
     getType(): string;
