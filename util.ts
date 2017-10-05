@@ -1,6 +1,7 @@
 import * as $ from "jquery";
+import { Array, String } from "./utils";
 
-class Util {
+export class Util {
   static browserLanguage;
   static currentLanguage;
   static dataJSON;
@@ -15,6 +16,13 @@ class Util {
       hTML += "\">" + body + "</" + name;
     }
     return hTML + ">";
+  }
+
+  static normalizePort(val: number|string): number|string|boolean {
+    let port: number = (typeof val === 'string') ? parseInt(val, 10) : val;
+    if (isNaN(port)) return val;
+    else if (port >= 0) return port;
+    else return false;
   }
 
   static getJsonPromise(path: string): JQueryPromise<any> {
@@ -102,76 +110,3 @@ class Util {
   }
 
 }
-
-declare global {
-  class Util {
-    static browserLanguage;
-    static currentLanguage;
-    static dataJSON;
-  
-    static elementHTML(name: string, id?: string, body?: string);
-  
-    static getJsonPromise(path: string): JQueryPromise<any> ;
-  
-    static getTag(name: string);
-  
-    static getFileName(name: string);
-  
-    static getCurrentComponentPath();
-  
-    static getBrowserLanguage();
-  
-    static getCurrentLanguage();
-
-    static removeElements(elements: NodeListOf<Element>);
-  }
-
-  interface Array<T> {
-    type: any;
-    getType(): string;
-  }
-  
-  interface JQueryStatic {
-    cache;
-  }
-  
-  interface String {
-    replaceAll(search:string, replacement:string): string;
-  }
-}
-
-declare interface Array<T> {
-  type: any;
-  getType(): string;
-}
-
-declare interface JQueryStatic {
-  cache;
-}
-
-declare interface String {
-  replaceAll(search:string, replacement:string): string;
-}
-
-String.prototype.replaceAll = function(search, replacement) {
-    var target = this;
-    return target.replace(new RegExp(search, 'g'), replacement);
-};
-
-Array.prototype.getType = function () {
-  return this.type;
-}
-
-// interface Object {
-//     getClassName(): string;
-//     getConstructor(): any;
-// }
-
-// Object.prototype.getConstructor = function() {
-//   return this.constructor;
-// }
-
-// Object.prototype.getClassName = function() {
-//   return this.constructor.name;
-// }
-

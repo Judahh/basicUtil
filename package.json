@@ -1,6 +1,6 @@
 {
   "name": "basicutil",
-  "version": "1.0.3",
+  "version": "1.0.10",
   "description": "",
   "main": "util.js",
   "scripts": {
@@ -37,8 +37,7 @@
   "dependencies": {
     "@types/jquery": "3.2.12",
     "@types/node": "8.0.24",
-    "jquery": "^3.2.1",
-    "ntypescript": "^1.201706190042.1"
+    "jquery": "^3.2.1"
   },
   "devDependencies": {}
 }
