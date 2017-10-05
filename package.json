@@ -1,0 +1,38 @@
+{
+  "name": "basicutil",
+  "version": "1.0.0",
+  "description": "",
+  "main": "util.js",
+  "scripts": {
+    "start": "node server.js",
+    "lint": "tslint \"src/**/*.ts\"",
+    "test": "ng test",
+    "prestart": "",
+    "pree2e": "webdriver-manager update",
+    "e2e": "protractor",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "build": "gulp build",
+    "clean": "shx rm -Rf build/",
+    "gulp": "gulp",
+    "electronStart": "electron .",
+    "tryWeb": "npm-run-all build lite",
+    "tryDesktop": "npm-run-all build electron",
+    "packDesktop": "electron-packager . --platform=all --arch=all --overwrite --icon=favicon.ico --ignore=node_modules/electron-*",
+    "packDesktopX64": "electron-packager . --platform=all --arch=x64 --overwrite --icon=favicon.ico --ignore=node_modules/electron-*",
+    "packDesktopWinX64": "electron-packager . --platform=win32 --arch=x64 --overwrite --icon=favicon.ico --ignore=node_modules/electron-*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Judahh/basicUtil.git"
+  },
+  "author": "Judah Holanda Correia Lima <judahholanda7@gmail.com> (https://judahh.com)",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/Judahh/basicUtil/issues"
+  },
+  "homepage": "https://github.com/Judahh/basicUtil#readme",
+  "dependencies": {
+  },
+  "devDependencies": {}
+}
