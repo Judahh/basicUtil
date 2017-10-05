@@ -1,7 +1,9 @@
+import * as $ from "jquery";
+
 class Util {
   static browserLanguage;
   static currentLanguage;
-  static dataJSON: Array<any>;
+  static dataJSON;
 
   static elementHTML(name: string, id?: string, body?: string) {
     console.log("Name: " + name);
@@ -17,7 +19,7 @@ class Util {
 
   static getJsonPromise(path: string): JQueryPromise<any> {
     if (Util.dataJSON == null){
-        Util.dataJSON = new Array();
+        Util.dataJSON = new Array<any>();
     }
     if (Util.dataJSON[path] == null){
         Util.dataJSON[path] = $.getJSON(path);
@@ -101,16 +103,31 @@ class Util {
 
 }
 
-interface Array<T> {
+declare global {
+  interface Array<T> {
+    type: any;
+    getType(): string;
+  }
+  
+  interface JQueryStatic {
+    cache;
+  }
+  
+  interface String {
+    replaceAll(search:string, replacement:string): string;
+  }
+}
+
+declare interface Array<T> {
   type: any;
   getType(): string;
 }
 
-interface JQueryStatic {
+declare interface JQueryStatic {
   cache;
 }
 
-interface String {
+declare interface String {
   replaceAll(search:string, replacement:string): string;
 }
 

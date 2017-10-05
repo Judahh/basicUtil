@@ -33,6 +33,9 @@
   },
   "homepage": "https://github.com/Judahh/basicUtil#readme",
   "dependencies": {
+    "@types/jquery": "3.2.12",
+    "@types/node": "8.0.24",
+    "jquery": "^3.2.1"
   },
   "devDependencies": {}
 }
