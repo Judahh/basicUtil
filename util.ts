@@ -1,5 +1,5 @@
 import * as $ from "jquery";
-import { Array, String } from "./utils";
+import "simpleutils";
 
 export class Util {
   static browserLanguage;
