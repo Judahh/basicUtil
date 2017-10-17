@@ -8,7 +8,7 @@ export class Util {
 
   static elementHTML(name: string, id?: string, body?: string) {
     console.log("Name: " + name);
-    var hTML = "<" + name;
+    let hTML = "<" + name;
     if (id) {
       hTML += " id=\"" + id;
     }
@@ -40,7 +40,7 @@ export class Util {
   }
 
   static getTag(name: string) {
-    var names: string[] = name.split("Component");
+    let names: string[] = name.split("Component");
     return names[names.length - 1].toLowerCase();
   }
 
@@ -49,11 +49,11 @@ export class Util {
   }
 
   static getCurrentComponentPath() {
-    var error = new Error();
+    let error = new Error();
     // console.log("test:"+(stack+"")+"end");
-    var stack = error.stack+"END";
+    let stack = error.stack+"END";
     // console.log("path:"+stack);    
-    var link = stack.split('(')[3];
+    let link = stack.split('(')[3];
     if(link==null||link==undefined||link==""){
       link = stack.split('@')[3];
     }
@@ -71,7 +71,7 @@ export class Util {
       return Util.browserLanguage;
     }
 
-    var navigator = <any>window.navigator,
+    let navigator = <any>window.navigator,
       browserLanguagePropertyKeys = ['language', 'browserLanguage', 'systemLanguage', 'userLanguage'],
       i,
       language;
