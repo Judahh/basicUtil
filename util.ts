@@ -68,8 +68,10 @@ export class Util {
     return link;
   }
 
-  public removeElements(elements: NodeListOf<Element>) {
-    while (elements[0]) elements[0].parentNode.removeChild(elements[0]);
+  public removeElements(elements: NodeListOf<Element>|HTMLCollectionOf<Element>|HTMLCollectionOf<HTMLElement>) {
+    while (elements[0]) {
+      elements[0].parentNode.removeChild(elements[0]);
+    }
   }
 
   public getBrowserLanguage() {
