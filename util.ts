@@ -2,11 +2,19 @@ import * as $ from 'jquery';
 import 'simpleutils';
 
 export class Util {
-  public static browserLanguage;
-  public static currentLanguage;
-  public static dataJSON;
+  private static instance: Util;
+  private browserLanguage;
+  private currentLanguage;
+  // public static dataJSON;
 
-  public static elementHTML(name: string, id?: string, body?: string) {
+  public static getInstance(): Util {
+    if (!this.instance) {
+      this.instance = new Util();
+    }
+    return this.instance;
+  }
+
+  public elementHTML(name: string, id?: string, body?: string) {
     console.log('Name: ' + name);
     let hTML = '<' + name;
     if (id) {
@@ -18,37 +26,35 @@ export class Util {
     return hTML + '>';
   }
 
-  public static normalizePort(val: number | string): number | string | boolean {
+  public normalizePort(val: number | string): number | string | boolean {
     let port: number = (typeof val === 'string') ? parseInt(val, 10) : val;
     if (isNaN(port)) return val;
     else if (port >= 0) return port;
     else return false;
   }
 
-  public static getJsonPromise(path: string): JQueryPromise<any> {
-    if (Util.dataJSON == null) {
-      Util.dataJSON = new Array<any>();
-    }
-    if (Util.dataJSON[path] == null) {
-      Util.dataJSON[path] = $.getJSON(path);
-    }
-    // else{
-    //   console.log("CACHE");
+  public getJsonPromise(path: string): JQueryPromise<any> {
+    // if (this.dataJSON == null) {
+    //   this.dataJSON = new Array();
     // }
-    return Util.dataJSON[path];
-    // return $.getJSON(path);
+    // if (this.dataJSON[path] == null) {
+    //   this.dataJSON[path] = $.getJSON(path);
+    // }
+
+    // return this.dataJSON[path];
+    return $.getJSON(path);
   }
 
-  public static getTag(name: string) {
+  public getTag(name: string) {
     let names: string[] = name.split('Component');
     return names[names.length - 1].toLowerCase();
   }
 
-  public static getFileName(name: string) {
+  public getFileName(name: string) {
     return name.charAt(0).toLowerCase() + name.slice(1);
   }
 
-  public static getCurrentComponentPath() {
+  public getCurrentComponentPath() {
     let error = new Error();
     // console.log("test:"+(stack+"")+"end");
     let stack = error.stack + 'END';
@@ -62,13 +68,13 @@ export class Util {
     return link;
   }
 
-  public static removeElements(elements: NodeListOf<Element>) {
+  public removeElements(elements: NodeListOf<Element>) {
     while (elements[0]) elements[0].parentNode.removeChild(elements[0]);
   }
 
-  public static getBrowserLanguage() {
-    if (Util.browserLanguage !== undefined) {
-      return Util.browserLanguage;
+  public getBrowserLanguage() {
+    if (this.browserLanguage !== undefined) {
+      return this.browserLanguage;
     }
 
     let navigator = <any>window.navigator,
@@ -81,7 +87,7 @@ export class Util {
       for (i = 0; i < navigator.languages.length; i++) {
         language = navigator.languages[i];
         if (language && language.length) {
-          Util.browserLanguage = language;
+          this.browserLanguage = language;
           return language;
         }
       }
@@ -91,32 +97,116 @@ export class Util {
     for (i = 0; i < browserLanguagePropertyKeys.length; i++) {
       language = navigator[browserLanguagePropertyKeys[i]];
       if (language && language.length) {
-        Util.browserLanguage = language;
+        this.browserLanguage = language;
         return language;
       }
     }
 
-    Util.browserLanguage = 'en-US';
-    return Util.browserLanguage;
+    this.browserLanguage = 'en-US';
+    return this.browserLanguage;
   }
 
-  public static getCurrentLanguage() {
-    if (Util.currentLanguage !== undefined) {
-      return Util.currentLanguage;
+  public getCurrentLanguage() {
+    if (this.currentLanguage !== undefined) {
+      return this.currentLanguage;
     } else {
-      Util.currentLanguage = Util.getBrowserLanguage();
+      this.currentLanguage = this.getBrowserLanguage();
     }
-    return Util.currentLanguage;
+    return this.currentLanguage;
   }
 
-  public static camelize(str) {
+  public setLanguage(language: string) {
+    // this.dataJSON = new Array();
+    this.currentLanguage = language;
+    this.setCookie('language', language);
+  }
+
+  public publicApiRequest(methodType: string, apiURL: string, callback) {
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+      if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+        // console.log(xmlHttp.responseText);
+        callback(xmlHttp.responseText);
+      }
+    }
+    xmlHttp.open(methodType, apiURL, true); // true for asynchronous
+    xmlHttp.send(null);
+  }
+
+  public setCookie(name: string, value: any, expiresDays?: number) {
+    if (expiresDays) {
+      let d = new Date();
+      d.setTime(d.getTime() + (expiresDays * 24 * 60 * 60 * 1000));
+      let expires = 'expires=' + d.toUTCString();
+      document.cookie = name + '=' + value + ';' + expires + ';path=/';
+    } else {
+      document.cookie = name + '=' + value + ';path=/';
+    }
+  }
+
+  public clearCookie(name: string, expiresDays?: number) {
+    if (expiresDays) {
+      let d = new Date();
+      d.setTime(d.getTime() + (expiresDays * 24 * 60 * 60 * 1000));
+      let expires = 'expires=' + d.toUTCString();
+      document.cookie = name + '=' + '' + ';' + expires + ';path=/';
+    } else {
+      document.cookie = name + '=' + '' + ';path=/';
+    }
+  }
+
+  public getCookie(name: string) {
+    name += '=';
+    let ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return '';
+  }
+
+  public checkCookie() {
+    let user = this.getCookie('username');
+    if (user !== '') {
+      alert('Welcome again ' + user);
+    } else {
+      user = prompt('Please enter your name:', '');
+      if (user !== '' && user != null) {
+        this.setCookie('username', user, 365);
+      }
+    }
+  }
+
+  // NodeListOf HTMLCollectionOfToNodeListOf(collection: HTMLCollectionOf<HTMLElement>) {
+  //   let nodeListOf = [];
+
+  //   if (collection) {
+  //     for (let i = 0; i < collection.length; i++) {
+  //       let node: Node = collection[i];
+
+  //       // Make sure it's really an Element
+  //       if (node.nodeType == Node.ELEMENT_NODE) {
+  //         nodeListOf.push(node as HTMLElement);
+  //       }
+  //     }
+  //   }
+
+  //   return (<NodeListOf<Element>> nodeListOf);
+  // }
+
+  public camelize(str) {
     return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
       if (+match === 0) return ''; // or if (/\s+/.test(match)) for white spaces
       return index === 0 ? match.toLowerCase() : match.toUpperCase();
     });
   }
 
-  public static isEquivalentArray(a, b, ignore?) {
+  public isEquivalentArray(a, b, ignore?) {
     if (a.length !== b.length) {
       return false;
     }
@@ -141,7 +231,7 @@ export class Util {
     return true;
   }
 
-  public static isEquivalentObject(a, b, ignore?) {
+  public isEquivalentObject(a, b, ignore?) {
     // Create arrays of property names
     let aProps = Object.getOwnPropertyNames(a);
     let bProps = Object.getOwnPropertyNames(b);
