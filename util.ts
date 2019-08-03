@@ -1,36 +1,36 @@
-import * as $ from "jquery";
-import "simpleutils";
+import * as $ from 'jquery';
+import 'simpleutils';
 
 export class Util {
-  static browserLanguage;
-  static currentLanguage;
-  static dataJSON;
+  public static browserLanguage;
+  public static currentLanguage;
+  public static dataJSON;
 
-  static elementHTML(name: string, id?: string, body?: string) {
-    console.log("Name: " + name);
-    let hTML = "<" + name;
+  public static elementHTML(name: string, id?: string, body?: string) {
+    console.log('Name: ' + name);
+    let hTML = '<' + name;
     if (id) {
-      hTML += " id=\"" + id;
+      hTML += ' id="' + id;
     }
     if (body) {
-      hTML += "\">" + body + "</" + name;
+      hTML += '">' + body + '</' + name;
     }
-    return hTML + ">";
+    return hTML + '>';
   }
 
-  static normalizePort(val: number|string): number|string|boolean {
+  public static normalizePort(val: number | string): number | string | boolean {
     let port: number = (typeof val === 'string') ? parseInt(val, 10) : val;
     if (isNaN(port)) return val;
     else if (port >= 0) return port;
     else return false;
   }
 
-  static getJsonPromise(path: string): JQueryPromise<any> {
-    if (Util.dataJSON == null){
-        Util.dataJSON = new Array<any>();
+  public static getJsonPromise(path: string): JQueryPromise<any> {
+    if (Util.dataJSON == null) {
+      Util.dataJSON = new Array<any>();
     }
-    if (Util.dataJSON[path] == null){
-        Util.dataJSON[path] = $.getJSON(path);
+    if (Util.dataJSON[path] == null) {
+      Util.dataJSON[path] = $.getJSON(path);
     }
     // else{
     //   console.log("CACHE");
@@ -39,22 +39,22 @@ export class Util {
     // return $.getJSON(path);
   }
 
-  static getTag(name: string) {
-    let names: string[] = name.split("Component");
+  public static getTag(name: string) {
+    let names: string[] = name.split('Component');
     return names[names.length - 1].toLowerCase();
   }
 
-  static getFileName(name: string) {
+  public static getFileName(name: string) {
     return name.charAt(0).toLowerCase() + name.slice(1);
   }
 
-  static getCurrentComponentPath() {
+  public static getCurrentComponentPath() {
     let error = new Error();
     // console.log("test:"+(stack+"")+"end");
-    let stack = error.stack+"END";
-    // console.log("path:"+stack);    
+    let stack = error.stack + 'END';
+    // console.log("path:"+stack);
     let link = stack.split('(')[3];
-    if(link==null||link==undefined||link==""){
+    if (link == null || link === undefined || link === '') {
       link = stack.split('@')[3];
     }
     link = link.split('.js')[0].split(location.href)[1];
@@ -62,12 +62,12 @@ export class Util {
     return link;
   }
 
-  static removeElements(elements: NodeListOf<Element>) {
+  public static removeElements(elements: NodeListOf<Element>) {
     while (elements[0]) elements[0].parentNode.removeChild(elements[0]);
   }
 
-  static getBrowserLanguage() {
-    if (Util.browserLanguage != undefined) {
+  public static getBrowserLanguage() {
+    if (Util.browserLanguage !== undefined) {
       return Util.browserLanguage;
     }
 
@@ -96,12 +96,12 @@ export class Util {
       }
     }
 
-    Util.browserLanguage = "en-US";
+    Util.browserLanguage = 'en-US';
     return Util.browserLanguage;
   }
 
-  static getCurrentLanguage() {
-    if (Util.currentLanguage != undefined) {
+  public static getCurrentLanguage() {
+    if (Util.currentLanguage !== undefined) {
       return Util.currentLanguage;
     } else {
       Util.currentLanguage = Util.getBrowserLanguage();
@@ -109,4 +109,80 @@ export class Util {
     return Util.currentLanguage;
   }
 
+  public static camelize(str) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
+      if (+match === 0) return ''; // or if (/\s+/.test(match)) for white spaces
+      return index === 0 ? match.toLowerCase() : match.toUpperCase();
+    });
+  }
+
+  public static isEquivalentArray(a, b, ignore?) {
+    if (a.length !== b.length) {
+      return false;
+    }
+
+    for (let index = 0; index < a.length; index++) {
+      let elementA = a[index];
+      let elementB = b[index];
+      if (elementA instanceof Array) {
+        if (!this.isEquivalentArray(elementA, elementB, ignore)) {
+          return false;
+        }
+      } else if (elementA instanceof Object) {
+        if (!this.isEquivalentObject(elementA, elementB, ignore)) {
+          return false;
+        }
+      } else {
+        if (elementA !== elementB) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  public static isEquivalentObject(a, b, ignore?) {
+    // Create arrays of property names
+    let aProps = Object.getOwnPropertyNames(a);
+    let bProps = Object.getOwnPropertyNames(b);
+
+    // If number of properties is different,
+    // objects are not equivalent
+    if (aProps.length !== bProps.length) {
+      return false;
+    }
+
+    for (let i = 0; i < aProps.length; i++) {
+      let propName = aProps[i];
+      let jump = false;
+
+      if (ignore) {
+        if (propName === ignore) {
+          jump = true;
+        }
+      }
+
+      if (!jump) {
+        // If values of same property are not equal,
+        // objects are not equivalent
+        if (a[propName] instanceof Array) {
+          if (!this.isEquivalentArray(a, b, ignore)) {
+            return false;
+          }
+        } else if (a[propName] instanceof Object) {
+          if (!this.isEquivalentObject(a, b, ignore)) {
+            return false;
+          }
+        } else {
+          if (a[propName] !== b[propName]) {
+            return false;
+          }
+        }
+      }
+    }
+
+    // If we made it this far, objects
+    // are considered equivalent
+    return true;
+  }
 }
