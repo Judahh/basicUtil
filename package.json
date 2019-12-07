@@ -1,6 +1,6 @@
 {
   "name": "basicutil",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Basic Util",
   "main": "util.js",
   "scripts": {
@@ -33,7 +33,7 @@
     "@types/jquery": "3.3.31"
   },
   "devDependencies": {
-    "typescript": "3.4.3",
+    "typescript": "3.7.3",
     "@types/node": "12.12.14"
   }
 }
