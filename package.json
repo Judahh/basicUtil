@@ -1,6 +1,6 @@
 {
   "name": "basicutil",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Basic Util",
   "main": "util.js",
   "scripts": {
@@ -27,12 +27,13 @@
   },
   "homepage": "https://github.com/Judahh/basicUtil#readme",
   "dependencies": {
-    "simpleutils": "^1.0.13",
-    "tslint": "5.19.0",
+    "simpleutils": "^1.0.16",
+    "tslint": "5.20.1",
     "jquery": "^3.4.1",
     "@types/jquery": "3.3.31"
   },
   "devDependencies": {
-    "@types/node": "12.7.4"
+    "typescript": "3.4.3",
+    "@types/node": "12.12.14"
   }
 }
