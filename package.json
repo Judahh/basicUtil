@@ -1,20 +1,19 @@
 {
   "name": "basicutil",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "description": "Basic Util",
   "main": "util.js",
   "scripts": {
-    "postinstall": "tsc",
+    "postinstall": "",
+    "prepublish": "",
+    "build": "tsc",
     "lint": "tslint \"src/**/*.ts\"",
-    "test": "ng test",
-    "prestart": "",
+    "test": "jest --passWithNoTests",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "ntsc": "ntsc",
     "ntsc:w": "ntsc -w",
-    "build": "gulp build",
-    "clean": "shx rm -Rf build/",
-    "gulp": "gulp"
+    "clean": "shx rm -Rf build/"
   },
   "repository": {
     "type": "git",
@@ -27,13 +26,16 @@
   },
   "homepage": "https://github.com/Judahh/basicUtil#readme",
   "dependencies": {
-    "simpleutils": "^1.0.18",
-    "tslint": "5.20.1",
-    "jquery": "^3.4.1",
-    "@types/jquery": "3.3.31"
+    "simpleutils": "^1.0.20",
+    "jquery": "^3.4.1"
   },
   "devDependencies": {
-    "typescript": "3.7.4",
-    "@types/node": "13.1.2"
+    "typescript": "3.7.5",
+    "tslint": "5.20.1",
+    "ts-jest": "^24.3.0",
+    "jest": "^24.9.0",
+    "@types/jest": "^24.9.0",
+    "@types/node": "13.1.7",
+    "@types/jquery": "3.3.31"
   }
 }
