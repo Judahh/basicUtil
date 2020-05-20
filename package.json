@@ -30,7 +30,7 @@
     "jquery": "^3.4.1"
   },
   "devDependencies": {
-    "typescript": "3.7.5",
+    "typescript": "3.9.3",
     "tslint": "5.20.1",
     "ts-jest": "^24.3.0",
     "jest": "^24.9.0",
