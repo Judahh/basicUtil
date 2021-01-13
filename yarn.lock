@@ -2805,9 +2805,9 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
 
 simpleutils@^1.0.20:
-  version "1.0.20"
-  resolved "https://registry.yarnpkg.com/simpleutils/-/simpleutils-1.0.20.tgz#829fa2608b7334e6450386eef8b611fadc3fe576"
-  integrity sha512-kHcXNx/iwNXGuf2Nsmd8DFUT3UW0ZorJLXaCBNv1p0E2dwajlwgGW71UOQUBWNrkKEleteCw7+dkXIU8KUEjbw==
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/simpleutils/-/simpleutils-1.0.21.tgz#caaa0c0ae250b73f9e95d37f8f39fd072dec5ef6"
+  integrity sha512-FfShDrhmIsD+nDzq4f942tuugESCue7AYEO7oic8BQD6vX/eooFgNZR/Iyt+17IB3MXKWH0d85xZXuUDYeNlTw==
 
 sisteransi@^1.0.3:
   version "1.0.4"
