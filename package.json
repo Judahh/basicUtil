@@ -36,6 +36,6 @@
     "jest": "^24.9.0",
     "@types/jest": "^24.9.0",
     "@types/node": "13.1.7",
-    "@types/jquery": "3.3.31"
+    "@types/jquery": "3.5.6"
   }
 }
