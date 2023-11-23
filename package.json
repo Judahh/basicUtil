@@ -27,7 +27,7 @@
   "homepage": "https://github.com/Judahh/basicUtil#readme",
   "dependencies": {
     "simpleutils": "^1.0.20",
-    "jquery": "^3.4.1"
+    "jquery": "^3.7.1"
   },
   "devDependencies": {
     "typescript": "3.7.5",
